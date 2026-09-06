@@ -28,6 +28,22 @@
       </a>
 
       <div class="nav-links">
+        <div class="language-switcher">
+          <button class="language-toggle" type="button" aria-expanded="false" aria-controls="language-menu">
+            <span class="language-flag">🇺🇸</span>
+            <span class="language-current">EN</span>
+            <span class="language-chevron" aria-hidden="true">⌄</span>
+          </button>
+
+          <div class="language-menu" id="language-menu" role="menu">
+            <button type="button" class="language-option active" data-language="en" role="menuitem">
+              <span>🇺🇸</span> English
+            </button>
+            <button type="button" class="language-option" data-language="pt" role="menuitem">
+              <span>🇧🇷</span> Português
+            </button>
+          </div>
+        </div>
       </div>
 
       <a
@@ -40,7 +56,6 @@
     </a>
 
     </nav>
-
 
     <div class="hero-overlay"></div>
 
@@ -1137,6 +1152,147 @@
     window.addEventListener('scroll', updateHeroScrollState, { passive: true });
     window.addEventListener('resize', updateHeroScrollState);
     updateHeroScrollState();
+
+    const languageSwitcher = document.querySelector('.language-switcher');
+    const languageToggle = document.querySelector('.language-toggle');
+    const languageCurrent = document.querySelector('.language-current');
+    const languageFlag = document.querySelector('.language-flag');
+    const languageOptions = document.querySelectorAll('.language-option');
+
+    const translations = {
+      en: {
+        htmlLang: 'en',
+        title: 'Nympha3D | Premium STL Models',
+        texts: [
+          ['.btn-small', 'Join Now'],
+          ['.hero h1', '<br>Sculpted with love<br><span>made for you.</span>'],
+          ['.hero-description', 'Detailed 1/6 scale collectibles designed for resin printing, with new models released every month.'],
+          ['.hero-actions .btn:first-child', 'Explore Membership'],
+          ['.hero-actions .btn-outline', 'View Models'],
+          ['.hero-stats div:nth-child(1) span', 'Models every month'],
+          ['.hero-stats div:nth-child(2) span', 'Collector scale'],
+          ['.hero-stats div:nth-child(3) span', 'Ready for printing'],
+          ['.membership .eyebrow', 'NYMPHA3D MEMBERSHIP'],
+          ['.membership h2', 'New premium models <span>every month.</span>'],
+          ['.membership .section-heading > p:last-child', 'Join Nympha3D and receive collectible-quality STL models, exclusive versions and monthly releases made especially for resin printing enthusiasts.'],
+          ['.benefit:nth-child(1) p', 'New Musas every month'], ['.benefit:nth-child(2) p', 'Pre-supported files'],
+          ['.benefit:nth-child(3) p', '1/6 scale models'], ['.benefit:nth-child(4) p', 'Exclusive Patreon releases'],
+          ['.benefit:nth-child(5) p', 'NSFW versions on Premium'], ['.benefit:nth-child(6) p', 'Bust versions'],
+          ['.benefit:nth-child(7) p', 'Community polls'], ['.benefit:nth-child(8) p', 'Loyalty rewards'],
+          ['.benefit-featured p', 'Printing tutorials with GroundEffected'],
+          ['.quality .eyebrow', 'MADE WITH COLLECTORS IN MIND'], ['.quality h2', 'Beautiful sculpting. <span>Reliable printing.</span>'],
+          ['.comparison-card.muted h3', 'Typical STL Files'], ['.comparison-card.featured h3', 'Made for Resin Printing'],
+          ['.quality-start-btn', 'Start Printing'],
+          ['.printing-community .eyebrow', 'LEARN TO PRINT'], ['.printing-community h2', 'From digital sculpt <span>to real-world print.</span>'],
+          ['.printing-community-copy > p:not(.eyebrow)', 'GroundEffected joins the community with practical, easy-to-follow videos that help you turn your Nympha3D files into beautiful prints.'],
+          ['.printing-reel-caption strong', 'How to print your next sculpt'],
+          ['.testimonials .eyebrow', 'OUR COMMUNITY'], ['.testimonials h2', 'Loved by collectors <span>around the world.</span>'],
+          ['.models .eyebrow', 'CHARACTERS YOU LOVE'], ['.models h2', 'Models from anime, <span>games & comics.</span>'],
+          ['.models .section-heading > p:last-child', 'Discover characters reimagined as premium collectible sculptures.'],
+          ['.model-note:nth-of-type(1)', 'Previous months models are available separately in our stores. <span>Premium members save 35%</span> and <span>Standard members save 20%.</span>'],
+          ['.model-note:nth-of-type(2)', 'NSFW models are available for <span>Premium members only</span>.'], ['.models .center .btn', 'GET MODELS'],
+          ['.versions-heading .eyebrow', 'TWO WAYS TO COLLECT'], ['.versions h2', 'One sculpt. <span>Two expressions.</span>'],
+          ['.versions-heading > p:last-child', 'Every release comes with two distinct versions, so you can choose the look that belongs in your collection.'],
+          ['.version-card:first-child h3', 'Signature Look'], ['.version-card:first-child p', 'The original styling, pose and silhouette that define the release.'],
+          ['.version-card.alternate h3', 'Alternate Edition'], ['.version-card.alternate p', 'A fresh outfit variation for a completely different display.'],
+          ['.community-prints .eyebrow', 'ENGAGED COMMUNITY'], ['.community-prints h2', 'Sculpted here. <span>Printed by you.</span>'],
+          ['.community-prints-copy > p:not(.eyebrow)', 'From the first idea to the final painted piece, our community brings every release to life in their own way.'],
+          ['.community-print-photo figcaption strong', 'Made to be displayed.'],
+          ['.loyalty .eyebrow', 'EXCLUSIVE MEMBER REWARDS'], ['.loyalty h2', 'Nympha3D <span>Loyalty Rewards</span>'],
+          ['.loyalty-description', 'After your third month, choose any previous model from the Nympha3D archive as your loyalty reward.'],
+          ['.plans .eyebrow', 'JOIN NYMPHA3D'], ['.plans h2', 'Choose your <span>membership.</span>'],
+          ['.price-card:nth-child(1) .price-description', 'Get the monthly Nympha3D releases.'], ['.price-card:nth-child(2) .price-description', 'The complete Nympha3D experience.'], ['.price-card:nth-child(3) .price-description', 'For creators who sell physical prints.'],
+          ['.price-card:nth-child(1) .btn', 'Join Standard'], ['.price-card:nth-child(2) .btn', 'Join Premium'], ['.price-card:nth-child(3) .btn', 'Join Merchant'],
+          ['.final-cta .eyebrow', 'YOUR NEXT PRINT STARTS HERE'], ['.final-cta h2', 'Collect. <span>Print.</span> Paint.'],
+          ['.final-cta .container > p', 'Join the Nympha3D community and get new collectible sculptures delivered every month.'], ['.final-cta .btn', 'Join Nympha3D on Patreon'],
+          ['footer .container > p', 'Premium digital sculptures for resin printing.']
+        ]
+      },
+      pt: {
+        htmlLang: 'pt-BR',
+        title: 'Nympha3D | Modelos STL Premium',
+        texts: [
+          ['.btn-small', 'Entrar agora'], ['.hero h1', '<br>Esculpido com amor<br><span>feito para você.</span>'],
+          ['.hero-description', 'Colecionáveis detalhados em escala 1/6, criados para impressão em resina, com novos modelos lançados todos os meses.'],
+          ['.hero-actions .btn:first-child', 'Conheça a membresia'], ['.hero-actions .btn-outline', 'Ver modelos'],
+          ['.hero-stats div:nth-child(1) span', 'Modelos por mês'], ['.hero-stats div:nth-child(2) span', 'Escala de colecionador'], ['.hero-stats div:nth-child(3) span', 'Pronto para imprimir'],
+          ['.membership .eyebrow', 'MEMBRESIA NYMPHA3D'], ['.membership h2', 'Novos modelos premium <span>todos os meses.</span>'],
+          ['.membership .section-heading > p:last-child', 'Junte-se à Nympha3D e receba modelos STL com qualidade de colecionador, versões exclusivas e lançamentos mensais feitos especialmente para fãs de impressão em resina.'],
+          ['.benefit:nth-child(1) p', 'Novas Musas todos os meses'], ['.benefit:nth-child(2) p', 'Arquivos pré-suportados'], ['.benefit:nth-child(3) p', 'Modelos em escala 1/6'], ['.benefit:nth-child(4) p', 'Lançamentos exclusivos do Patreon'], ['.benefit:nth-child(5) p', 'Versões NSFW no Premium'], ['.benefit:nth-child(6) p', 'Versões busto'], ['.benefit:nth-child(7) p', 'Enquetes da comunidade'], ['.benefit:nth-child(8) p', 'Recompensas de fidelidade'], ['.benefit-featured p', 'Tutoriais de impressão com GroundEffected'],
+          ['.quality .eyebrow', 'FEITO PARA COLECIONADORES'], ['.quality h2', 'Escultura impressionante. <span>Impressão confiável.</span>'], ['.comparison-card.muted h3', 'Arquivos STL comuns'], ['.comparison-card.featured h3', 'Feito para impressão em resina'], ['.quality-start-btn', 'Comece a imprimir'],
+          ['.printing-community .eyebrow', 'APRENDA A IMPRIMIR'], ['.printing-community h2', 'Da escultura digital <span>à impressão real.</span>'], ['.printing-community-copy > p:not(.eyebrow)', 'GroundEffected participa da comunidade com vídeos práticos e fáceis de acompanhar, ajudando você a transformar seus arquivos Nympha3D em lindas impressões.'], ['.printing-reel-caption strong', 'Como imprimir sua próxima escultura'],
+          ['.testimonials .eyebrow', 'NOSSA COMUNIDADE'], ['.testimonials h2', 'Amado por colecionadores <span>do mundo todo.</span>'], ['.models .eyebrow', 'PERSONAGENS QUE VOCÊ AMA'], ['.models h2', 'Modelos de animes, <span>jogos e quadrinhos.</span>'], ['.models .section-heading > p:last-child', 'Descubra personagens reinventados como esculturas colecionáveis premium.'], ['.model-note:nth-of-type(1)', 'Modelos de meses anteriores estão disponíveis separadamente em nossas lojas. <span>Membros Premium economizam 35%</span> e <span>membros Standard economizam 20%.</span>'], ['.model-note:nth-of-type(2)', 'Modelos NSFW estão disponíveis apenas para <span>membros Premium</span>.'], ['.models .center .btn', 'VER MODELOS'],
+          ['.versions-heading .eyebrow', 'DUAS FORMAS DE COLECIONAR'], ['.versions h2', 'Uma escultura. <span>Duas expressões.</span>'], ['.versions-heading > p:last-child', 'Cada lançamento vem com duas versões distintas, para você escolher o visual que pertence à sua coleção.'], ['.version-card:first-child h3', 'Visual original'], ['.version-card:first-child p', 'O estilo, a pose e a silhueta originais que definem o lançamento.'], ['.version-card.alternate h3', 'Edição alternativa'], ['.version-card.alternate p', 'Uma nova variação de roupa para uma exposição completamente diferente.'],
+          ['.community-prints .eyebrow', 'COMUNIDADE PARTICIPATIVA'], ['.community-prints h2', 'Esculpido aqui. <span>Impresso por você.</span>'], ['.community-prints-copy > p:not(.eyebrow)', 'Da primeira ideia à peça pintada, nossa comunidade dá vida a cada lançamento do seu próprio jeito.'], ['.community-print-photo figcaption strong', 'Feito para ser exibido.'],
+          ['.loyalty .eyebrow', 'RECOMPENSAS EXCLUSIVAS'], ['.loyalty h2', 'Nympha3D <span>Recompensas de fidelidade</span>'], ['.loyalty-description', 'Após seu terceiro mês, escolha qualquer modelo anterior do arquivo Nympha3D como recompensa de fidelidade.'], ['.plans .eyebrow', 'JUNTE-SE À NYMPHA3D'], ['.plans h2', 'Escolha sua <span>membresia.</span>'], ['.price-card:nth-child(1) .price-description', 'Receba os lançamentos mensais da Nympha3D.'], ['.price-card:nth-child(2) .price-description', 'A experiência Nympha3D completa.'], ['.price-card:nth-child(3) .price-description', 'Para criadores que vendem impressões físicas.'], ['.price-card:nth-child(1) .btn', 'Entrar no Standard'], ['.price-card:nth-child(2) .btn', 'Entrar no Premium'], ['.price-card:nth-child(3) .btn', 'Entrar no Merchant'], ['.final-cta .eyebrow', 'SUA PRÓXIMA IMPRESSÃO COMEÇA AQUI'], ['.final-cta h2', 'Colecione. <span>Imprima.</span> Pinte.'], ['.final-cta .container > p', 'Junte-se à comunidade Nympha3D e receba novas esculturas colecionáveis todos os meses.'], ['.final-cta .btn', 'Entrar na Nympha3D pelo Patreon'], ['footer .container > p', 'Esculturas digitais premium para impressão em resina.']
+        ]
+      }
+    };
+
+    const additionalTranslations = {
+      en: [
+        ['.quality-cut-label span', 'PRINT-READY DETAIL'], ['.quality-cut-label strong', 'Every piece has its place.'],
+        ['.comparison-card.muted li:nth-child(1)', '✕ Weak or problematic cuts'], ['.comparison-card.muted li:nth-child(2)', '✕ Limited printing consideration'], ['.comparison-card.muted li:nth-child(3)', '✕ Little attention to assembly'], ['.comparison-card.muted li:nth-child(4)', '✕ Unoptimized parts'],
+        ['.comparison-card.featured li:nth-child(1)', '✓ Carefully separated parts'], ['.comparison-card.featured li:nth-child(2)', '✓ Tested before release'], ['.comparison-card.featured li:nth-child(3)', '✓ Pre-supported versions'], ['.comparison-card.featured li:nth-child(4)', '✓ Collector-friendly assembly'],
+        ['.printing-community-signature strong', 'PRINTING WITH GROUNDEFFECTED'], ['.printing-reel-topline span:first-child', 'NYMPHA3D / PRINT LAB'], ['.printing-reel-caption span', 'EP. 01'],
+        ['.version-card:first-child > .version-info > span', 'VERSION 01'], ['.version-switch span:first-child', 'same sculpt'], ['.version-switch span:last-child', 'new mood'], ['.version-card.alternate > .version-info > span', 'VERSION 02'],
+        ['.community-print-meta span:first-child', 'REAL PRINTS'], ['.community-print-meta span:last-child', 'SHARED PASSION'], ['.community-print-photo figcaption span', 'COMMUNITY PRINT'],
+        ['.reward-card:nth-child(1) > .reward-content > span', 'AFTER 3 MONTHS'], ['.reward-card:nth-child(1) h3', 'Your reward unlocks'], ['.reward-card:nth-child(1) p', 'Stay subscribed for three months and unlock your archive choice.'], ['.reward-card:nth-child(2) > .reward-content > span', 'YOUR CHOICE'], ['.reward-card:nth-child(2) h3', 'Pick any old model'], ['.reward-card:nth-child(2) p', 'Browse previous releases and choose the one you want to claim.'], ['.reward-card:nth-child(3) > .reward-content > span', 'ARCHIVE ACCESS'], ['.reward-card:nth-child(3) h3', 'Bring it home'], ['.reward-card:nth-child(3) p', 'Get your chosen model as a thank-you for staying with Nympha3D.'],
+        ['.popular', 'MOST POPULAR'], ['.price-card:nth-child(1) .tier', 'STANDARD'], ['.price-card:nth-child(2) .tier', 'PREMIUM'], ['.price-card:nth-child(3) .tier', 'MERCHANT'], ['.price-card .price span', '/ month'],
+        ['.price-card:nth-child(1) li:nth-child(1)', '✓ Monthly STL models'], ['.price-card:nth-child(1) li:nth-child(2)', '✓ Pre-supported files'], ['.price-card:nth-child(1) li:nth-child(3)', '✓ Community access'], ['.price-card:nth-child(1) li:nth-child(4)', '✓ Character polls'], ['.price-card:nth-child(2) li:nth-child(1)', '✓ Everything in Standard'], ['.price-card:nth-child(2) li:nth-child(2)', '✓ NSFW versions'], ['.price-card:nth-child(2) li:nth-child(3)', '✓ Bust versions'], ['.price-card:nth-child(2) li:nth-child(4)', '✓ Exclusive variants'], ['.price-card:nth-child(2) li:nth-child(5)', '✓ Loyalty rewards'], ['.price-card:nth-child(3) li:nth-child(1)', '✓ Premium membership'], ['.price-card:nth-child(3) li:nth-child(2)', '✓ Commercial print license'], ['.price-card:nth-child(3) li:nth-child(3)', '✓ Sell physical prints'], ['.price-card:nth-child(3) li:nth-child(4)', '✓ Merchant community'],
+        ['.testimonial-card:nth-child(1) > p', '“Nearly everything is great the way it is. I’ve liked how Nympha and Lucas respond to and participate with the community and how friendly everyone seems to be.”'], ['.testimonial-card:nth-child(2) > p', '“I love the anatomy that Nympha sculpts on the NSFW versions. Good variety of features that look like they’ve been sculpted by someone who knows what real women look like.”'], ['.testimonial-card:nth-child(3) > p', '“I think the bases are AMAZING. Seriously. The scale has been a little daunting once or twice, but the quality has been very very high, and I think that is something that is essential to this market.”'], ['.testimonial-card:nth-child(4) > p', '“I enjoy the engagement brought to the process. It\'s nice that the community is able to select what they\'d like to see, for all that my tastes are very different than the majority. :)”'], ['.testimonial-card:nth-child(5) > p', '“I especially like the variety of styles you release each month. Your models range from video games, movies, TV series, anime, cartoons, and geek culture in general, but they always keep the same distinctive artistic style that is unique to your Patreon. I really like that style.”'], ['.testimonial-card:nth-child(6) > p', '“The NSFW versions and designs are nice and not vulgar. Artistic would be a good way to describe the NSFW model parts.”'], ['.testimonial-card:nth-child(7) > p', '“You\'re one of the kindest people I have ever known, content creators or otherwise, and I\'m so grateful for that, and your sculpts, even for characters I\'m not into, are always amazing and of unparalleled high quality.”'], ['.testimonial-card:nth-child(8) > p', '“I love that in the past when i have asked a question directly you have answered it. I love that you take the time to honestly reach out and interact. So many patreons now that i have supported for years, sometimes do not even respond after reaching out 4 or 5 times. I also LOVE your style and your attention to detail, dont push too much to keep dumping more models that would risk your ability to provide your touch and your quality on these models. I have REALLY loved supporting you over the past year and am not going anywhere you are one of my favorites!”'], ['.testimonial-card:nth-child(9) > p', '“I love how Nympha interacts with her patrons and listens, it makes me feel truly involved in the creative process. It feels closer to a friendship than a business transaction with Nympha and i love that. I also delight in Nympha\'s original content sculpts always excited when one is proposed. You make beautiful sculptures and have engaging concepts also the faces that you create are truly adorable. I love your understanding and execution of the anatomy of your subjects, your posing is sublime.”'], ['.testimonial-card > strong', 'Patreon Member'], ['.testimonial-card:nth-child(2) > strong', 'Collector'], ['.testimonial-card:nth-child(3) > strong', 'Nympha3D Member'], ['.testimonial-card:nth-child(4) > strong', 'Patreon Member'], ['.testimonial-card:nth-child(5) > strong', 'Collector'], ['.testimonial-card:nth-child(6) > strong', 'Nympha3D Member'], ['.testimonial-card:nth-child(7) > strong', 'Patreon Member'], ['.testimonial-card:nth-child(8) > strong', 'Long-term Member'], ['.testimonial-card:nth-child(9) > strong', 'Nympha3D Patron'], ['.model-card:nth-child(4) .model-category', 'MEMBER PREVIEW'], ['.model-card:nth-child(4) h3', 'More releases'], ['.model-card:nth-child(4) .tags span:first-child', 'MEMBERS ONLY'], ['.model-card:nth-child(5) .model-category', 'EXCLUSIVE ACCESS'], ['.model-card:nth-child(5) h3', 'Monthly archive'], ['.model-card:nth-child(5) .tags span:first-child', 'REWARDS ONLY'], ['.model-card:nth-child(6) .model-category', 'NYMPHA3D MEMBERSHIP'], ['.model-card:nth-child(6) h3', 'NSFW Versions'], ['.model-card:nth-child(6) .tags span:first-child', 'PREMIUM MEMBERS ONLY'], ['.testimonial-card .read-more', 'Read more'],
+        ['.footer-links a:nth-child(1)', 'Patreon'], ['.footer-links a:nth-child(2)', 'Cults3D'], ['.footer-links a:nth-child(3)', 'Gumroad'], ['.footer-links a:nth-child(4)', 'Instagram'], ['.footer-links a:nth-child(5)', 'Discord']
+      ],
+      pt: [
+        ['.quality-cut-label span', 'DETALHE PRONTO PARA IMPRIMIR'], ['.quality-cut-label strong', 'Cada peça tem seu lugar.'],
+        ['.comparison-card.muted li:nth-child(1)', '✕ Cortes fracos ou problemáticos'], ['.comparison-card.muted li:nth-child(2)', '✕ Pouca atenção à impressão'], ['.comparison-card.muted li:nth-child(3)', '✕ Pouca atenção à montagem'], ['.comparison-card.muted li:nth-child(4)', '✕ Peças não otimizadas'],
+        ['.comparison-card.featured li:nth-child(1)', '✓ Peças cuidadosamente separadas'], ['.comparison-card.featured li:nth-child(2)', '✓ Testado antes do lançamento'], ['.comparison-card.featured li:nth-child(3)', '✓ Versões pré-suportadas'], ['.comparison-card.featured li:nth-child(4)', '✓ Montagem amigável para colecionadores'],
+        ['.printing-community-signature strong', 'IMPRESSÃO COM GROUNDEFFECTED'], ['.printing-reel-topline span:first-child', 'NYMPHA3D / LABORATÓRIO'], ['.printing-reel-caption span', 'EP. 01'],
+        ['.version-card:first-child > .version-info > span', 'VERSÃO 01'], ['.version-switch span:first-child', 'mesma escultura'], ['.version-switch span:last-child', 'novo clima'], ['.version-card.alternate > .version-info > span', 'VERSÃO 02'],
+        ['.community-print-meta span:first-child', 'IMPRESSÕES REAIS'], ['.community-print-meta span:last-child', 'PAIXÃO COMPARTILHADA'], ['.community-print-photo figcaption span', 'IMPRESSÃO DA COMUNIDADE'],
+        ['.reward-card:nth-child(1) > .reward-content > span', 'APÓS 3 MESES'], ['.reward-card:nth-child(1) h3', 'Sua recompensa desbloqueia'], ['.reward-card:nth-child(1) p', 'Fique inscrito por três meses e desbloqueie sua escolha do arquivo.'], ['.reward-card:nth-child(2) > .reward-content > span', 'SUA ESCOLHA'], ['.reward-card:nth-child(2) h3', 'Escolha qualquer modelo antigo'], ['.reward-card:nth-child(2) p', 'Navegue pelos lançamentos anteriores e escolha o que deseja resgatar.'], ['.reward-card:nth-child(3) > .reward-content > span', 'ACESSO AO ARQUIVO'], ['.reward-card:nth-child(3) h3', 'Leve para casa'], ['.reward-card:nth-child(3) p', 'Receba o modelo escolhido como agradecimento por continuar com a Nympha3D.'],
+        ['.popular', 'MAIS POPULAR'], ['.price-card:nth-child(1) .tier', 'STANDARD'], ['.price-card:nth-child(2) .tier', 'PREMIUM'], ['.price-card:nth-child(3) .tier', 'MERCHANT'], ['.price-card .price span', '/ mês'],
+        ['.price-card:nth-child(1) li:nth-child(1)', '✓ Modelos STL mensais'], ['.price-card:nth-child(1) li:nth-child(2)', '✓ Arquivos pré-suportados'], ['.price-card:nth-child(1) li:nth-child(3)', '✓ Acesso à comunidade'], ['.price-card:nth-child(1) li:nth-child(4)', '✓ Enquetes de personagens'], ['.price-card:nth-child(2) li:nth-child(1)', '✓ Tudo do Standard'], ['.price-card:nth-child(2) li:nth-child(2)', '✓ Versões NSFW'], ['.price-card:nth-child(2) li:nth-child(3)', '✓ Versões busto'], ['.price-card:nth-child(2) li:nth-child(4)', '✓ Variações exclusivas'], ['.price-card:nth-child(2) li:nth-child(5)', '✓ Recompensas de fidelidade'], ['.price-card:nth-child(3) li:nth-child(1)', '✓ Membresia Premium'], ['.price-card:nth-child(3) li:nth-child(2)', '✓ Licença comercial de impressão'], ['.price-card:nth-child(3) li:nth-child(3)', '✓ Venda de impressões físicas'], ['.price-card:nth-child(3) li:nth-child(4)', '✓ Comunidade de comerciantes'],
+        ['.testimonial-card:nth-child(1) > p', '“Quase tudo é ótimo do jeito que está. Gosto de como Nympha e Lucas respondem e participam da comunidade, e de como todos parecem ser tão amigáveis.”'], ['.testimonial-card:nth-child(2) > p', '“Adoro a anatomia que Nympha esculpe nas versões NSFW. Há uma ótima variedade de características, feitas por alguém que entende como são as mulheres reais.”'], ['.testimonial-card:nth-child(3) > p', '“Acho que as bases são INCRÍVEIS. Sério. A escala pode ser um pouco intimidadora às vezes, mas a qualidade é muito alta, e isso é essencial neste mercado.”'], ['.testimonial-card:nth-child(4) > p', '“Gosto do envolvimento no processo. É bom poder escolher o que queremos ver, mesmo quando meus gostos são bem diferentes da maioria. :)”'], ['.testimonial-card:nth-child(5) > p', '“Gosto especialmente da variedade de estilos lançados todos os meses. Os modelos vão de videogames, filmes, séries, animes, desenhos e cultura geek em geral, mas mantêm o estilo artístico único da Nympha3D.”'], ['.testimonial-card:nth-child(6) > p', '“As versões NSFW e os designs são bonitos e não vulgares. Artístico é uma boa forma de descrever as partes NSFW dos modelos.”'], ['.testimonial-card:nth-child(7) > p', '“Você é uma das pessoas mais gentis que já conheci, criadora de conteúdo ou não. Seus modelos são sempre incríveis e de qualidade incomparável.”'], ['.testimonial-card:nth-child(8) > p', '“Adoro que você responda quando faço uma pergunta e reserve tempo para interagir de verdade. Também adoro seu estilo e atenção aos detalhes. Apoiar você no último ano tem sido incrível.”'], ['.testimonial-card:nth-child(9) > p', '“Adoro como Nympha interage com os apoiadores e escuta a comunidade. Isso me faz sentir parte do processo criativo. Vocês fazem esculturas lindas, com conceitos envolventes, rostos adoráveis e poses sublimes.”'], ['.testimonial-card:nth-child(1) > strong', 'Membro do Patreon'], ['.testimonial-card:nth-child(2) > strong', 'Colecionador'], ['.testimonial-card:nth-child(3) > strong', 'Membro Nympha3D'], ['.testimonial-card:nth-child(4) > strong', 'Membro do Patreon'], ['.testimonial-card:nth-child(5) > strong', 'Colecionador'], ['.testimonial-card:nth-child(6) > strong', 'Membro Nympha3D'], ['.testimonial-card:nth-child(7) > strong', 'Membro do Patreon'], ['.testimonial-card:nth-child(8) > strong', 'Membro antigo'], ['.testimonial-card:nth-child(9) > strong', 'Patrono Nympha3D'], ['.model-card:nth-child(4) .model-category', 'PRÉVIA PARA MEMBROS'], ['.model-card:nth-child(4) h3', 'Mais lançamentos'], ['.model-card:nth-child(4) .tags span:first-child', 'SOMENTE MEMBROS'], ['.model-card:nth-child(5) .model-category', 'ACESSO EXCLUSIVO'], ['.model-card:nth-child(5) h3', 'Arquivo mensal'], ['.model-card:nth-child(5) .tags span:first-child', 'APENAS RECOMPENSAS'], ['.model-card:nth-child(6) .model-category', 'MEMBRESIA NYMPHA3D'], ['.model-card:nth-child(6) h3', 'Versões NSFW'], ['.model-card:nth-child(6) .tags span:first-child', 'APENAS MEMBROS PREMIUM'], ['.testimonial-card .read-more', 'Ler mais'], ['.footer-links a:nth-child(1)', 'Patreon'], ['.footer-links a:nth-child(2)', 'Cults3D'], ['.footer-links a:nth-child(3)', 'Gumroad'], ['.footer-links a:nth-child(4)', 'Instagram'], ['.footer-links a:nth-child(5)', 'Discord']
+      ]
+    };
+
+    const setLanguage = (language) => {
+      const translation = translations[language];
+      const textMap = translation.texts.concat(additionalTranslations[language]);
+      textMap.forEach(([selector, value]) => {
+        document.querySelectorAll(selector).forEach((element) => {
+          element.innerHTML = value;
+        });
+      });
+      document.documentElement.lang = translation.htmlLang;
+      document.title = translation.title;
+      languageCurrent.textContent = language.toUpperCase();
+      languageFlag.textContent = language === 'pt' ? '🇧🇷' : '🇺🇸';
+      languageOptions.forEach((option) => option.classList.toggle('active', option.dataset.language === language));
+      localStorage.setItem('nympha-language', language);
+      updateReadMoreButtons();
+    };
+
+    languageToggle.addEventListener('click', () => {
+      const isOpen = languageSwitcher.classList.toggle('open');
+      languageToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    languageOptions.forEach((option) => option.addEventListener('click', () => {
+      setLanguage(option.dataset.language);
+      languageSwitcher.classList.remove('open');
+      languageToggle.setAttribute('aria-expanded', 'false');
+    }));
+
+    document.addEventListener('click', (event) => {
+      if (!languageSwitcher.contains(event.target)) {
+        languageSwitcher.classList.remove('open');
+        languageToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    setLanguage(localStorage.getItem('nympha-language') || 'en');
   </script>
 
 </body>

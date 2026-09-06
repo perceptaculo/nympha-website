@@ -270,6 +270,7 @@ h2 {
   box-shadow: none;
   backdrop-filter: blur(18px);
   transform: translateX(-100%);
+  justify-content: center;
   animation: join-attention 2.8s ease-in-out 1s infinite;
 }
 
@@ -288,6 +289,17 @@ h2 {
 
 .navbar-permanent .logo {
   display: none;
+}
+
+
+.navbar-permanent .language-switcher {
+  display: none;
+}
+
+
+.navbar-permanent .nav-links {
+  display: none;
+  margin: 0;
 }
 
 
@@ -323,7 +335,105 @@ h2 {
 
 .nav-links {
   display: flex;
-  gap: 36px;
+  gap: 0;
+  margin-left: auto;
+  margin-right: 16px;
+}
+
+
+.language-switcher {
+  position: relative;
+  z-index: 30;
+}
+
+
+.language-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid rgba(255,255,255,.16);
+  border-radius: 999px;
+  background: rgba(15,10,15,.62);
+  color: var(--text);
+  cursor: pointer;
+  font: inherit;
+  font-size: .66rem;
+  font-weight: 800;
+  letter-spacing: .08em;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+
+.language-toggle:hover,
+.language-switcher.open .language-toggle {
+  border-color: rgba(255,130,179,.55);
+  background: rgba(211,91,140,.18);
+}
+
+
+.language-flag,
+.language-option span {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+
+.language-chevron {
+  color: var(--pink-light);
+  font-size: .9rem;
+  line-height: 1;
+}
+
+
+.language-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  display: grid;
+  min-width: 154px;
+  padding: 6px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 12px;
+  background: rgba(18,11,18,.94);
+  box-shadow: 0 18px 40px rgba(0,0,0,.35);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity .2s ease, transform .2s ease;
+  backdrop-filter: blur(18px);
+}
+
+
+.language-switcher.open .language-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+
+.language-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 11px;
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--text-soft);
+  cursor: pointer;
+  font: inherit;
+  font-size: .7rem;
+  font-weight: 700;
+  text-align: left;
+}
+
+
+.language-option:hover,
+.language-option.active {
+  background: rgba(255,130,179,.12);
+  color: var(--text);
 }
 
 
@@ -742,7 +852,7 @@ h2 {
   position: absolute;
   z-index: 4;
   left: 50%;
-  bottom: 58px;
+  bottom: 24px;
 
   white-space: nowrap;
   transform: translateX(-50%);
@@ -2196,7 +2306,8 @@ footer small {
 
 
   .nav-links {
-    display: none;
+    display: flex;
+    gap: 0;
   }
 
 
