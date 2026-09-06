@@ -45,13 +45,10 @@
 
     <div class="hero-content container">
 
-      <p class="eyebrow">
-        PREMIUM STL MODELS FOR 3D PRINTING
-      </p>
 
       <h1>
-        Bring Your Favorite<br>
-        <span>Characters To Life.</span>
+        <br>Sculpted with love<br>
+        <span>made for you.</span>
       </h1>
 
       <p class="hero-description">
@@ -689,6 +686,40 @@
 
   </footer>
 
+  <script>
+    const firstOverlay = document.querySelector('.hero-overlay');
+    const secondOverlay = document.querySelector('.quality-overlay');
+    const navbar = document.querySelector('.navbar');
+
+    const updateHeroScrollState = () => {
+      const scrollOffset = window.scrollY;
+      const firstOverlayRect = firstOverlay.getBoundingClientRect();
+      const secondOverlayRect = secondOverlay.getBoundingClientRect();
+      const transitionStart =
+        firstOverlayRect.bottom + scrollOffset - window.innerHeight;
+      const transitionEnd =
+        secondOverlayRect.top + scrollOffset - window.innerHeight - 240;
+      const heroProgress = Math.min(
+        Math.max(
+          (window.scrollY - transitionStart) /
+            (transitionEnd - transitionStart),
+          0
+        ),
+        1
+      );
+
+      navbar.classList.toggle(
+        'navbar-expanded',
+        heroProgress > 0 && heroProgress < 1
+      );
+      navbar.classList.toggle('navbar-ending', heroProgress > 0.9 && heroProgress < 1);
+      navbar.classList.toggle('navbar-permanent', heroProgress >= 1);
+    };
+
+    window.addEventListener('scroll', updateHeroScrollState, { passive: true });
+    window.addEventListener('resize', updateHeroScrollState);
+    updateHeroScrollState();
+  </script>
 
 </body>
 </html>

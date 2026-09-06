@@ -93,7 +93,8 @@ h3 {
 
 
 h1 {
-  font-size: clamp(3rem, 7vw, 6.3rem);
+  margin: 0;
+  font-size: clamp(3rem, 5vw, 6.3rem);
   font-weight: 800;
   letter-spacing: -.065em;
 }
@@ -118,7 +119,7 @@ h2 {
   letter-spacing: .18em;
   font-size: .75rem;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 
@@ -215,11 +216,58 @@ h2 {
 
   height: 95px;
 
+  transition:
+    top .55s cubic-bezier(.22, 1, .36, 1),
+    transform .55s cubic-bezier(.22, 1, .36, 1),
+    width .55s cubic-bezier(.22, 1, .36, 1),
+    height .55s cubic-bezier(.22, 1, .36, 1),
+    padding .55s cubic-bezier(.22, 1, .36, 1),
+    background-color .55s ease,
+    border-color .55s ease,
+    border-radius .55s cubic-bezier(.22, 1, .36, 1),
+    box-shadow .55s ease;
+
   z-index: 20;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+
+.navbar-expanded {
+  position: fixed;
+  top: calc(50vh - 47px);
+  width: min(90%, 680px);
+  height: 94px;
+  padding: 0 26px;
+
+  background: rgba(15, 10, 15, .78);
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  box-shadow: 0 0 0 100vmax rgba(0,0,0,.8);
+  backdrop-filter: blur(18px);
+}
+
+
+.navbar-ending {
+  transform: translateX(-50%) scale(.78);
+  box-shadow: none;
+}
+
+
+.navbar-permanent {
+  position: fixed;
+  top: 20px;
+  width: min(90%, var(--container));
+  height: 72px;
+  padding: 0 26px;
+
+  background: rgba(15, 10, 15, .86);
+  border: none;
+  border-radius: 999px;
+  box-shadow: none;
+  backdrop-filter: blur(18px);
 }
 
 
@@ -276,7 +324,7 @@ h2 {
   position: relative;
 
   display: flex;
-  align-items: center;
+  align-items: flex-start;
 
   background:
     url("images/hero.jpg")
@@ -320,6 +368,7 @@ h2 {
   z-index: 5;
 
   max-width: 1180px;
+  padding-top: 0px;
 }
 
 
