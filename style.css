@@ -626,7 +626,7 @@ h2 {
   overflow: hidden;
   isolation: isolate;
   background: #100b11;
-  border-top: 1px solid rgba(255,255,255,.08);
+  border-top: 0;
   border-bottom: 1px solid rgba(255,255,255,.08);
 }
 
@@ -652,16 +652,26 @@ h2 {
   pointer-events: none;
 }
 
+.welcome-pack::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: -1;
+  height: 150px;
+  background: linear-gradient(var(--bg), transparent);
+  pointer-events: none;
+}
+
 .welcome-pack-content {
   position: relative;
-  min-height: 640px;
+  min-height: 500px;
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(290px, 390px);
   grid-template-rows: 1fr auto;
   align-items: center;
   gap: clamp(50px, 8vw, 130px);
   padding-top: 70px;
-  padding-bottom: 70px;
+  padding-bottom: 30px;
 }
 
 .welcome-pack-copy {
@@ -824,12 +834,9 @@ h2 {
 }
 
 .welcome-pack-cta {
-  grid-column: 1;
-  grid-row: 2;
-  align-self: end;
-  justify-self: start;
-  margin-top: 0;
-  margin-bottom: 2px;
+  display: flex;
+  width: fit-content;
+  margin: 8px auto 42px;
 }
 
 .welcome-pack-line {
@@ -2582,7 +2589,7 @@ footer small {
 
   .welcome-pack,
   .welcome-pack-content {
-    min-height: 570px;
+    min-height: 500px;
   }
 
   .welcome-pack-count {
@@ -2732,16 +2739,16 @@ footer small {
 
   .quality-cut-preview img {
     object-position: 42% center;
-    filter: saturate(.98) brightness(.88);
+    filter: saturate(1.12) contrast(1.04) brightness(1.08);
     transform: scale(1.04);
   }
 
   .quality-cut-preview::after {
     background: linear-gradient(
       180deg,
-      rgba(4,5,8,.04),
-      rgba(4,5,8,.08) 48%,
-      rgba(4,5,8,.7)
+      rgba(4,5,8,0),
+      rgba(4,5,8,.03) 48%,
+      rgba(4,5,8,.5)
     );
   }
 
@@ -2787,10 +2794,13 @@ footer small {
     display: flex;
     flex-direction: column;
     gap: 0;
+    min-height: 0;
     padding-top: 92px;
+    padding-bottom: 20px;
   }
 
   .welcome-pack-gallery {
+    margin-top: 28px;
     padding-bottom: 30px;
   }
 
@@ -2849,10 +2859,7 @@ footer small {
   }
 
   .welcome-pack-cta {
-    align-self: center;
-    justify-self: auto;
-    margin-top: 26px;
-    margin-bottom: 0;
+    margin: 26px auto 64px;
   }
 
 
