@@ -3867,56 +3867,72 @@ footer {
 /* =========================================================
    COLLECTION FLOW
 
-   Models is the discovery/catalogue step. Versions is the
-   quieter studio step that explains how one release expands.
+   One continuous collection, with shared type, spacing and cards.
 ========================================================= */
 
 .models {
-  padding-top: 118px;
+  padding-top: 88px;
   padding-bottom: 0;
-  background:
-    radial-gradient(circle at 8% 18%, rgba(142,91,201,.12), transparent 30%),
-    linear-gradient(180deg, #09080b 0%, #100b12 100%);
+  background: transparent;
 }
 
-.models::before {
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 1px;
-  transform: none;
-  background: linear-gradient(90deg, transparent, rgba(255,130,179,.65), transparent);
-}
-
+.models::before,
 .models::after {
-  right: -8%;
-  bottom: -260px;
-  width: 520px;
-  height: 520px;
-  border: 1px solid rgba(255,255,255,.05);
-  border-radius: 50%;
-  transform: none;
+  content: none;
 }
 
 .models .section-heading {
-  max-width: 820px;
-  margin: 0 0 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, .8fr);
+  column-gap: clamp(28px, 5vw, 72px);
+  row-gap: 14px;
+  max-width: none;
+  margin: 0 0 28px;
   text-align: left;
 }
 
-.models .section-heading h2 {
-  max-width: 620px;
+.models .section-heading .eyebrow {
+  grid-column: 1 / -1;
 }
 
-.models .section-heading > p:last-child {
-  max-width: 500px;
-  margin: 18px 0 0;
+.models .section-heading h2,
+.versions-heading h2 {
+  max-width: 620px;
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  font-size: clamp(2rem, 3.8vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -.04em;
+  line-height: 1.12;
+  text-transform: none;
+}
+
+.models .section-heading > p:last-child,
+.versions-heading > p:last-child {
+  align-self: end;
+  max-width: 420px;
+  margin: 0;
+  color: var(--text-soft);
+  font-size: .9rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.models .section-heading .eyebrow,
+.versions-heading .eyebrow {
+  margin: 0;
+  color: var(--pink-light);
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-align: left;
 }
 
 .model-grid {
+  align-items: stretch;
   gap: 16px;
-  padding: 10px 2px 24px;
-  scrollbar-color: rgba(255,130,179,.65) transparent;
+  padding: 6px 0 16px;
+  scrollbar-color: rgba(255,130,179,.4) transparent;
 }
 
 .model-grid::-webkit-scrollbar-track {
@@ -3924,27 +3940,53 @@ footer {
 }
 
 .model-grid::-webkit-scrollbar-thumb {
-  background: rgba(255,130,179,.65);
+  background: rgba(255,130,179,.4);
 }
 
 .model-card {
+  display: flex;
+  flex-direction: column;
   flex-basis: 27%;
-  border-radius: 4px;
-  border-color: rgba(255,255,255,.12);
-  background: rgba(18,13,20,.72);
-  box-shadow: 0 20px 45px rgba(0,0,0,.2);
+  margin: 0;
 }
 
-.model-card:hover {
-  border-color: rgba(255,130,179,.55);
+.model-card,
+.version-card,
+.version-card.alternate {
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 12px;
+  background: rgba(22,17,25,.88);
+  box-shadow: 0 10px 28px rgba(0,0,0,.16);
+  transition: border-color .25s ease, box-shadow .25s ease;
 }
 
-.model-image {
-  height: 420px;
+.model-card:hover,
+.version-card:hover {
+  transform: none;
+  border-color: rgba(255,130,179,.4);
+  box-shadow: 0 12px 32px rgba(0,0,0,.24);
+}
+
+.model-image,
+.version-image {
   position: relative;
+  flex: none;
+  height: auto;
+  aspect-ratio: 3 / 4;
+  border: 0;
 }
 
-.model-image::after {
+.model-image img,
+.version-image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.model-image::after,
+.version-image::after {
   content: "";
   position: absolute;
   inset: auto 0 0;
@@ -3953,20 +3995,36 @@ footer {
   pointer-events: none;
 }
 
-.model-info {
+.model-info,
+.version-info {
+  flex: 1;
   min-height: 132px;
-  padding: 20px 20px 22px;
+  padding: 22px;
   border-top: 1px solid rgba(255,255,255,.08);
 }
 
-.model-category {
-  font-size: .55rem;
-  letter-spacing: .16em;
+.model-category,
+.version-info > span {
+  display: block;
+  color: var(--pink-light);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .12em;
 }
 
-.model-info h3 {
+.model-info h3,
+.version-info h3 {
+  margin: 8px 0 0;
   font-size: 1.2rem;
   letter-spacing: -.02em;
+  line-height: 1.25;
+}
+
+.version-info p {
+  margin-top: 10px;
+  color: var(--text-soft);
+  font-size: .84rem;
+  line-height: 1.65;
 }
 
 .tags {
@@ -3991,67 +4049,58 @@ footer {
 .shared-collection-background {
   position: relative;
   background:
-    radial-gradient(circle at 8% 16%, rgba(142,91,201,.12), transparent 26%),
-    radial-gradient(circle at 82% 62%, rgba(142,91,201,.11), transparent 34%),
-    linear-gradient(180deg, #09080b 0%, #0f0a11 48%, #0b090d 100%);
+    radial-gradient(ellipse at 8% 24%, rgba(142,91,201,.08), transparent 48%),
+    radial-gradient(ellipse at 92% 66%, rgba(211,91,140,.06), transparent 48%),
+    linear-gradient(180deg, #09080b, #100c13 50%, #09080b);
 }
 
-.shared-collection-background > .models {
+.shared-collection-background > .models,
+.shared-collection-background > .versions {
   background: transparent;
 }
 
+.shared-collection-background > .models > .container,
+.shared-collection-background > .versions > .container {
+  width: min(calc(100% - 112px), var(--container));
+}
+
 .shared-collection-background::before {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  z-index: 2;
-  width: min(90%, var(--container));
-  padding-top: 18px;
-  transform: translateX(-50%);
-  color: rgba(255,255,255,.28);
-  font-size: .52rem;
-  font-weight: 800;
-  letter-spacing: .2em;
-  text-align: center;
+  content: none;
 }
 
 .versions {
   min-height: 0;
-  padding-top: 104px;
-  padding-bottom: 104px;
-  background:
-    radial-gradient(ellipse at 14% 58%, rgba(255,130,179,.09), transparent 38%),
-    radial-gradient(circle at 82% 58%, rgba(142,91,201,.14), transparent 34%);
+  padding-top: 44px;
+  padding-bottom: 80px;
+  background: transparent;
 }
 
 .versions-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(250px, .65fr);
-  column-gap: clamp(36px, 7vw, 96px);
-  row-gap: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
   max-width: none;
-  margin-bottom: 54px;
-  padding-bottom: 30px;
-  border-bottom: 1px solid rgba(255,255,255,.14);
+  margin: 0 0 28px;
+  padding: 0;
+  border: 0;
   text-align: left;
+}
+
+.versions-heading::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,.12), transparent);
+}
+
+.versions-heading > p:last-child {
+  max-width: 580px;
+  align-self: center;
 }
 
 .versions-heading .eyebrow {
-  grid-column: 1 / -1;
-  margin: 0;
-  color: rgba(255,130,179,.9);
-  font-size: .58rem;
-  text-align: left;
-}
-
-.versions-heading h2 {
-  margin: 0;
-  font-family: "Montserrat", sans-serif;
-  font-size: clamp(2rem, 3.8vw, 3.25rem);
-  font-weight: 800;
-  letter-spacing: -.04em;
-  line-height: 1.08;
-  text-transform: none;
+  flex: none;
 }
 
 .versions-heading h2 span {
@@ -4061,41 +4110,17 @@ footer {
   font-style: normal;
 }
 
-.versions-heading > p:last-child {
-  align-self: end;
-  max-width: 360px;
-  margin: 0 0 3px;
-  color: rgba(255,255,255,.66);
-}
-
 .versions-showcase {
-  grid-template-columns: minmax(0, 1fr) 110px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) 72px minmax(0, 1fr);
   align-items: stretch;
-  gap: 26px;
+  gap: 24px;
+  max-width: 860px;
+  margin: 0 auto;
 }
 
 .version-card {
   display: flex;
   flex-direction: column;
-  border-radius: 2px;
-  border-color: rgba(255,255,255,.14);
-  background: rgba(14,11,17,.92);
-  box-shadow: 0 22px 50px rgba(0,0,0,.3);
-}
-
-.version-card.alternate {
-  border-color: rgba(255,130,179,.45);
-  background: linear-gradient(150deg, rgba(60,24,48,.86), rgba(14,11,17,.95));
-}
-
-.version-image {
-  height: 405px;
-  border-bottom: 1px solid rgba(255,255,255,.12);
-}
-
-.version-info {
-  flex: 1;
-  padding: 22px 24px 24px;
 }
 
 .version-switch {
@@ -4143,65 +4168,70 @@ footer {
 
 @media (max-width: 700px) {
   .models {
-    padding-top: 82px;
+    padding-top: 60px;
     padding-bottom: 0;
   }
 
   .models .section-heading {
-    margin-bottom: 30px;
-  }
-
-  .model-card,
-  .model-card:nth-child(2),
-  .model-card:nth-child(3) {
-    flex-basis: 82%;
-    transform: none;
-  }
-
-  .model-card:nth-child(2):hover,
-  .model-card:nth-child(3):hover {
-    transform: translateY(-9px);
-  }
-
-  .model-image {
-    height: 380px;
-  }
-
-  .shared-collection-background::before {
-    font-size: .44rem;
-    letter-spacing: .14em;
-  }
-
-  .versions {
-    padding-top: 72px;
-    padding-bottom: 72px;
-  }
-
-  .versions-heading {
     display: block;
-    margin-bottom: 34px;
-    padding-bottom: 24px;
+    margin-bottom: 24px;
   }
 
-  .versions-heading .eyebrow {
-    margin-bottom: 14px;
+  .models .section-heading .eyebrow {
+    margin-bottom: 12px;
   }
 
+  .models .section-heading h2,
   .versions-heading h2 {
     font-size: clamp(1.9rem, 9vw, 2.5rem);
   }
 
+  .models .section-heading > p:last-child {
+    margin-top: 16px;
+  }
+
+  .model-card {
+    flex-basis: 82%;
+  }
+
+  .shared-collection-background > .models > .container,
+  .shared-collection-background > .versions > .container {
+    width: calc(100% - 40px);
+  }
+
+  .versions {
+    padding-top: 32px;
+    padding-bottom: 60px;
+  }
+
+  .versions-heading {
+    display: block;
+    margin-bottom: 24px;
+    padding-bottom: 0;
+  }
+
+  .versions-heading .eyebrow {
+    margin-bottom: 12px;
+  }
+
+  .versions-heading::after {
+    display: none;
+  }
+
   .versions-heading > p:last-child {
-    max-width: 420px;
-    margin-top: 18px;
+    max-width: none;
+    margin: 0;
   }
 
   .versions-showcase {
-    gap: 22px;
+    grid-template-columns: minmax(0, 1fr);
+    max-width: 440px;
+    gap: 18px;
   }
 
-  .version-image {
-    height: 340px;
+  .model-info,
+  .version-info {
+    padding: 20px;
   }
 
   .version-switch {
@@ -4221,7 +4251,8 @@ footer {
 /* Loyalty rewards tab shared by the models and versions sections. */
 .shared-collection-background {
   --rewards-panel-width: min(470px, 92vw);
-  isolation: isolate;
+  /* The fixed drawer must remain in the page stacking context so later sections
+     cannot paint over it while the page scrolls. */
 }
 
 .rewards-rail {
