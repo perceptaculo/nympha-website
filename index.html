@@ -1352,6 +1352,15 @@
     sharedCollection.insertBefore(models, versions);
     sharedCollection.append(loyalty);
 
+    // These sections share one continuous background and the same design rules.
+    const sharedCommunity = document.createElement('div');
+    sharedCommunity.className = 'shared-community-background';
+    sharedCommunity.append(
+      document.querySelector('.printing-community'),
+      communityPrints,
+      document.querySelector('.testimonials')
+    );
+
     [
       document.querySelector('.welcome-pack'),
       document.querySelector('.plans'),
@@ -1359,9 +1368,7 @@
       document.querySelector('.membership'),
       sharedCollection,
       document.querySelector('.quality'),
-      document.querySelector('.printing-community'),
-      communityPrints,
-      document.querySelector('.testimonials'),
+      sharedCommunity,
       document.querySelector('.final-cta')
     ].forEach((section) => {
       document.body.insertBefore(section, footer);
