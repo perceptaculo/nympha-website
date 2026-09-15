@@ -1055,18 +1055,25 @@
 
   <div class="shared-collection-background">
 
+  <div class="rewards-rail">
+    <button
+      class="rewards-tab"
+      type="button"
+      aria-expanded="false"
+      aria-controls="rewards"
+    >
+      <span class="rewards-tab-label">Rewards</span>
+      <span class="rewards-tab-icon" aria-hidden="true">+</span>
+    </button>
+  </div>
+
   <!-- VERSIONS -->
   <section class="section versions">
 
     <div class="container">
 
       <div class="versions-heading">
-  
 
-        <h2>
-          One sculpt.
-          <span>Several expressions.</span>
-        </h2>
 
         <p>
           Every release comes with multiple versions, so you can choose
@@ -1193,6 +1200,8 @@
 
   <!-- LOYALTY -->
   <section class="section loyalty" id="rewards">
+
+    <button class="rewards-close" type="button" aria-label="Close rewards">×</button>
 
     <div class="loyalty-glow"></div>
 
@@ -1332,17 +1341,23 @@
     const footer = document.querySelector('footer');
     const sharedCollection = document.querySelector('.shared-collection-background');
     const communityPrints = sharedCollection.querySelector('.community-prints');
+    const versions = sharedCollection.querySelector('.versions');
+    const models = document.querySelector('.models');
+    const loyalty = document.querySelector('.loyalty');
+    const rewardsRail = sharedCollection.querySelector('.rewards-rail');
+    const rewardsTab = rewardsRail.querySelector('.rewards-tab');
 
     sharedCollection.removeChild(communityPrints);
+    sharedCollection.prepend(rewardsRail);
+    sharedCollection.insertBefore(models, versions);
+    sharedCollection.append(loyalty);
 
     [
       document.querySelector('.welcome-pack'),
       document.querySelector('.plans'),
       document.querySelector('.faq'),
       document.querySelector('.membership'),
-      document.querySelector('.models'),
       sharedCollection,
-      document.querySelector('.loyalty'),
       document.querySelector('.quality'),
       document.querySelector('.printing-community'),
       communityPrints,
@@ -1350,6 +1365,30 @@
       document.querySelector('.final-cta')
     ].forEach((section) => {
       document.body.insertBefore(section, footer);
+    });
+
+    const rewardsClose = document.querySelector('.rewards-close');
+
+    const setRewardsPanelOpen = (isOpen) => {
+      sharedCollection.classList.toggle('rewards-open', isOpen);
+      rewardsTab.setAttribute('aria-expanded', String(isOpen));
+      loyalty.setAttribute('aria-hidden', String(!isOpen));
+
+      if (isOpen) {
+        rewardsClose.focus();
+      } else {
+        rewardsTab.focus();
+      }
+    };
+
+    loyalty.setAttribute('aria-hidden', 'true');
+    rewardsTab.addEventListener('click', () => setRewardsPanelOpen(true));
+    rewardsClose.addEventListener('click', () => setRewardsPanelOpen(false));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && sharedCollection.classList.contains('rewards-open')) {
+        setRewardsPanelOpen(false);
+      }
     });
 
     const feedbackDialog = document.querySelector('#feedback-dialog');
@@ -1554,7 +1593,7 @@
         ['.comparison-card.muted li:nth-child(1)', '✕ Weak or problematic cuts'], ['.comparison-card.muted li:nth-child(2)', '✕ Limited printing consideration'], ['.comparison-card.muted li:nth-child(3)', '✕ Little attention to assembly'], ['.comparison-card.muted li:nth-child(4)', '✕ Unoptimized parts'],
         ['.comparison-card.featured li:nth-child(1)', '✓ Carefully separated parts'], ['.comparison-card.featured li:nth-child(2)', '✓ Tested before release'], ['.comparison-card.featured li:nth-child(3)', '✓ Pre-supported versions'], ['.comparison-card.featured li:nth-child(4)', '✓ Collector-friendly assembly'],
         ['.printing-community-signature strong', 'PRINTING WITH GROUNDEFFECTED'], ['.printing-reel-topline span:first-child', 'NYMPHA3D / PRINT LAB'], ['.printing-reel-caption span', 'EP. 01'],
-        ['.version-card:first-child > .version-info > span', 'VERSION 01'], ['.version-switch span:first-child', 'same sculpt'], ['.version-switch span:last-child', 'new mood'], ['.version-card.alternate > .version-info > span', 'VERSION 02'],
+        ['.versions-heading .eyebrow', 'TWO WAYS TO COLLECT'], ['.rewards-tab-label', 'Rewards'], ['.version-card:first-child > .version-info > span', 'VERSION 01'], ['.version-switch span:first-child', 'same sculpt'], ['.version-switch span:last-child', 'new mood'], ['.version-card.alternate > .version-info > span', 'VERSION 02'],
         ['.community-print-meta span:first-child', 'REAL PRINTS'], ['.community-print-meta span:last-child', 'SHARED PASSION'], ['.community-print-photo figcaption span', 'COMMUNITY PRINT'],
         ['.reward-card:nth-child(1) > .reward-content > span', 'AFTER 3 MONTHS'], ['.reward-card:nth-child(1) h3', 'Your reward unlocks'], ['.reward-card:nth-child(1) p', 'Stay subscribed for three months and unlock your archive choice.'], ['.reward-card:nth-child(2) > .reward-content > span', 'YOUR CHOICE'], ['.reward-card:nth-child(2) h3', 'Pick any old model'], ['.reward-card:nth-child(2) p', 'Browse previous releases and choose the one you want to claim.'], ['.reward-card:nth-child(3) > .reward-content > span', 'ARCHIVE ACCESS'], ['.reward-card:nth-child(3) h3', 'Bring it home'], ['.reward-card:nth-child(3) p', 'Get your chosen model as a thank-you for staying with Nympha3D.'],
         ['.popular', 'MOST POPULAR'], ['.price-card:nth-child(1) .tier', 'STANDARD'], ['.price-card:nth-child(2) .tier', 'PREMIUM'], ['.price-card:nth-child(3) .tier', 'MERCHANT'], ['.price-card .price span', '/ month'],
@@ -1567,7 +1606,7 @@
         ['.comparison-card.muted li:nth-child(1)', '✕ Cortes fracos ou problemáticos'], ['.comparison-card.muted li:nth-child(2)', '✕ Pouca atenção à impressão'], ['.comparison-card.muted li:nth-child(3)', '✕ Pouca atenção à montagem'], ['.comparison-card.muted li:nth-child(4)', '✕ Peças não otimizadas'],
         ['.comparison-card.featured li:nth-child(1)', '✓ Peças cuidadosamente separadas'], ['.comparison-card.featured li:nth-child(2)', '✓ Testado antes do lançamento'], ['.comparison-card.featured li:nth-child(3)', '✓ Versões pré-suportadas'], ['.comparison-card.featured li:nth-child(4)', '✓ Montagem amigável para colecionadores'],
         ['.printing-community-signature strong', 'IMPRESSÃO COM GROUNDEFFECTED'], ['.printing-reel-topline span:first-child', 'NYMPHA3D / LABORATÓRIO'], ['.printing-reel-caption span', 'EP. 01'],
-        ['.version-card:first-child > .version-info > span', 'VERSÃO 01'], ['.version-switch span:first-child', 'mesma escultura'], ['.version-switch span:last-child', 'novo clima'], ['.version-card.alternate > .version-info > span', 'VERSÃO 02'],
+        ['.rewards-tab-label', 'Recompensas'], ['.version-card:first-child > .version-info > span', 'VERSÃO 01'], ['.version-switch span:first-child', 'mesma escultura'], ['.version-switch span:last-child', 'novo clima'], ['.version-card.alternate > .version-info > span', 'VERSÃO 02'],
         ['.community-print-meta span:first-child', 'IMPRESSÕES REAIS'], ['.community-print-meta span:last-child', 'PAIXÃO COMPARTILHADA'], ['.community-print-photo figcaption span', 'IMPRESSÃO DA COMUNIDADE'],
         ['.reward-card:nth-child(1) > .reward-content > span', 'APÓS 3 MESES'], ['.reward-card:nth-child(1) h3', 'Sua recompensa desbloqueia'], ['.reward-card:nth-child(1) p', 'Fique inscrito por três meses e desbloqueie sua escolha do arquivo.'], ['.reward-card:nth-child(2) > .reward-content > span', 'SUA ESCOLHA'], ['.reward-card:nth-child(2) h3', 'Escolha qualquer modelo antigo'], ['.reward-card:nth-child(2) p', 'Navegue pelos lançamentos anteriores e escolha o que deseja resgatar.'], ['.reward-card:nth-child(3) > .reward-content > span', 'ACESSO AO ARQUIVO'], ['.reward-card:nth-child(3) h3', 'Leve para casa'], ['.reward-card:nth-child(3) p', 'Receba o modelo escolhido como agradecimento por continuar com a Nympha3D.'],
         ['.popular', 'MAIS POPULAR'], ['.price-card:nth-child(1) .tier', 'STANDARD'], ['.price-card:nth-child(2) .tier', 'PREMIUM'], ['.price-card:nth-child(3) .tier', 'MERCHANT'], ['.price-card .price span', '/ mês'],
